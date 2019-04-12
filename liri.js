@@ -1,35 +1,22 @@
-// DEPENDENCIES
-// =====================================
-// Read and set environment variables
 require("dotenv").config();
 
-// Import the node-spotify-api NPM package.
 var Spotify = require("node-spotify-api");
 
-// Import the API keys
 var keys = require("./keys");
 
-// Import the axios npm package.
 var axios = require("axios");
 
-// Import the moment npm package.
 var moment = require("moment");
 
-// Import the FS package for read/write.
 var fs = require("fs");
 
-// Initialize the spotify API client using our client id and secret
 var spotify = new Spotify(keys.spotify);
 
-// FUNCTIONS
-// =====================================
 
-// Helper function that gets the artist name
 var getArtistNames = function(artist) {
   return artist.name;
 };
 
-// Function for running a Spotify search
 var getMeSpotify = function(songName) {
   if (songName === undefined) {
     songName = "The Sign Ace of Base";
@@ -77,9 +64,6 @@ var getMyBands = function(artist) {
       for (var i = 0; i < jsonData.length; i++) {
         var show = jsonData[i];
 
-        // Print data about each concert
-        // If a concert doesn't have a region, display the country instead
-        // Use moment to format the date
         console.log(
           show.venue.city +
             "," +
@@ -94,7 +78,6 @@ var getMyBands = function(artist) {
   );
 };
 
-// Function for running a Movie Search
 var getMeMovie = function(movieName) {
   if (movieName === undefined) {
     movieName = "Mr Nobody";
@@ -120,7 +103,6 @@ var getMeMovie = function(movieName) {
   );
 };
 
-// Function for running a command based on text file
 var doWhatItSays = function() {
   fs.readFile("random.txt", "utf8", function(error, data) {
     console.log(data);
@@ -135,7 +117,6 @@ var doWhatItSays = function() {
   });
 };
 
-// Function for determining which command is executed
 var pick = function(caseData, functionData) {
   switch (caseData) {
   case "concert-this":
@@ -155,11 +136,9 @@ var pick = function(caseData, functionData) {
   }
 };
 
-// Function which takes in command line arguments and executes correct function accordingly
 var runThis = function(argOne, argTwo) {
   pick(argOne, argTwo);
 };
 
-// MAIN PROCESS
-// =====================================
+
 runThis(process.argv[2], process.argv.slice(3).join(" "));
